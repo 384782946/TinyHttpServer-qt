@@ -6,10 +6,12 @@
 
 在实现的时候没有考虑多进程实例的情况，这个毕竟只是一个小玩具．
 
-![1](htdoc/server1.png)
+![s1](htdoc/server1.png)
+![s2](htdoc/server2.png)
 
 ![2](htdoc/tray1.png)
 
 ![3](htdoc/zh_hans.png)
 
 ![test](htdoc/test.png)
+![test2](htdoc/test2.png)
