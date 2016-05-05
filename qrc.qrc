@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/exit.ico</file>
+        <file>icon/restart.png</file>
+        <file>icon/setting.ico</file>
+        <file>icon/start.ico</file>
+        <file>icon/stop.ico</file>
+        <file>icon/tray.ico</file>
+        <file>icon/restart2.ico</file>
+    </qresource>
+</RCC>
