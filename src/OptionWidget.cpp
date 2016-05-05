@@ -21,16 +21,38 @@ OptionWidget::OptionWidget(QWidget *parent)
 {
     // 设置窗口布局
     {
+        QString btnstyle("QPushButton{"
+                            "height: 32px;"
+                            "border-radius: 4px;"
+                            "border: 1px solid rgb(89, 153, 48);"
+                            "background:DimGray;"
+                            "color: white;"
+                         "}");
+        QString editstyle("QLineEdit{"
+                              "height: 32px;"
+                              "border-radius: 4px;"
+                              "border: 1px solid rgb(89, 153, 48);"
+                              "background:DimGray;"
+                              "color: white;"
+                          "}");
+        this->setStyleSheet("QWidget{"
+                            "border-radius: 4px;"
+                            "background:RoyalBlue;"
+                            "color: white;"
+                            "}");
         // 端口编辑框
         QLabel*     _lab_port = new QLabel(tr("port:"));
         _edit_port = new QLineEdit;
         _edit_port->setValidator(new QIntValidator(80,65535));
+        _edit_port->setStyleSheet(editstyle);
         // 是否允许目录列表
         _cbox_dirlist = new QCheckBox(tr("enable directory listing?"));
         // 根目录文件夹
         QLabel*    _lab_rootdir = new QLabel(tr("root:"));
         _edit_rootdir = new QLineEdit;
         QPushButton* _btn_rootdir = new QPushButton(tr("select dir"));
+        _edit_rootdir->setStyleSheet(editstyle);
+        _btn_rootdir->setStyleSheet(btnstyle);
 
         this->updateShowData();
 
@@ -42,6 +64,10 @@ OptionWidget::OptionWidget(QWidget *parent)
         _btn_start->setIcon(QIcon(":/icon/start.ico"));
         _btn_stop->setIcon(QIcon(":/icon/stop.ico"));
         _btn_restart->setIcon(QIcon(":/icon/restart2.ico"));
+
+        _btn_start->setStyleSheet(btnstyle);
+        _btn_stop->setStyleSheet(btnstyle);
+        _btn_restart->setStyleSheet(btnstyle);
 
         _btn_stop->setEnabled(false);
         _btn_restart->setEnabled(false);

@@ -52,6 +52,9 @@ void TrayMenu::initMenu()
     _menu->addSeparator();
     _menu->addAction(_act_showoption);
     _menu->addAction(_act_exit);
+    // 设置基本宽高
+    //_menu->setBaseSize(128,32);
+    _menu->setStyleSheet("QMenu::item{ height:32px;}");
     // 设置不显示
     _menu->setVisible(false);
 }

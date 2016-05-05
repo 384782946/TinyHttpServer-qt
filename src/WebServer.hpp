@@ -10,6 +10,7 @@ extern "C"{
 
 // 这里为了将来不使用Qt的时候比较方便,所以没有使用QT的定时器来做轮询
 // 而是采用了std的线程.
+// solym@sohu.com
 
 class WebServer
 {
