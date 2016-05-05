@@ -24,3 +24,5 @@ HEADERS  += src/OptionWidget.hpp \
     src/TrayMenu.hpp
 
 RESOURCES += qrc.qrc
+
+TRANSLATIONS = zh_hans.ts
