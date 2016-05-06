@@ -35,7 +35,8 @@ OptionWidget::OptionWidget(QWidget *parent)
                               "background:DimGray;"
                               "color: white;"
                           "}");
-        this->setStyleSheet("QWidget{"
+		this->setObjectName("OptionWidget");
+        this->setStyleSheet("QWidget#OptionWidget{"
                             "border-radius: 4px;"
                             "background:RoyalBlue;"
                             "color: white;"
