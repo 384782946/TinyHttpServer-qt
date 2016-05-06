@@ -22,20 +22,20 @@ OptionWidget::OptionWidget(QWidget *parent)
     // 设置窗口布局
     {
         QString btnstyle("QPushButton{"
-                            "height: 32px;"
-                            "border-radius: 4px;"
-                            "border: 1px solid rgb(89, 153, 48);"
-                            "background:DimGray;"
-                            "color: white;"
+                         "height: 32px;"
+                         "border-radius: 4px;"
+                         "border: 1px solid rgb(89, 153, 48);"
+                         "background:DimGray;"
+                         "color: white;"
                          "}");
         QString editstyle("QLineEdit{"
-                              "height: 32px;"
-                              "border-radius: 4px;"
-                              "border: 1px solid rgb(89, 153, 48);"
-                              "background:DimGray;"
-                              "color: white;"
+                          "height: 32px;"
+                          "border-radius: 4px;"
+                          "border: 1px solid rgb(89, 153, 48);"
+                          "background:DimGray;"
+                          "color: white;"
                           "}");
-		this->setObjectName("OptionWidget");
+        this->setObjectName("OptionWidget");
         this->setStyleSheet("QWidget#OptionWidget{"
                             "border-radius: 4px;"
                             "background:RoyalBlue;"
@@ -54,6 +54,7 @@ OptionWidget::OptionWidget(QWidget *parent)
         QPushButton* _btn_rootdir = new QPushButton(tr("select dir"));
         _edit_rootdir->setStyleSheet(editstyle);
         _btn_rootdir->setStyleSheet(btnstyle);
+        _btn_rootdir->setIcon(QIcon(":/icon/folder.ico"));
 
         this->updateShowData();
 
@@ -112,15 +113,31 @@ OptionWidget::OptionWidget(QWidget *parent)
 
         connect(_tray,&TrayMenu::destroyed,
                 [this](){this->stopServer();this->close();});
+        // 托盘点击事件
+        connect(_tray,&TrayMenu::activated,[this](QSystemTrayIcon::ActivationReason reason){
+            switch (reason) {
+            case QSystemTrayIcon::Trigger://单击托盘图标
+            case QSystemTrayIcon::DoubleClick://双击托盘图标
+                this->showNormal();
+                this->raise();
+                break;
+            default:
+                break;
+            }
+        });
     }
     // 设置窗口标题图标
-    this->setWindowIcon(QIcon(":/icon/tray.ico"));
-    // 设置窗口的位置
-    // 设置不显示close按钮
-    _winflags = this->windowFlags();
-    // 必须要 Qt::CustomizeWindowHint 否则无效
-    this->setWindowFlags(_winflags & ~Qt::WindowCloseButtonHint &~Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
-    //this->showMinimized();
+    {
+        this->setWindowIcon(QIcon(":/icon/tray.ico"));
+        // 设置窗口的位置
+        // 设置不显示close按钮
+        _winflags = this->windowFlags();
+        // 必须要 Qt::CustomizeWindowHint 否则无效
+        this->setWindowFlags(_winflags & ~Qt::WindowCloseButtonHint &
+                             ~Qt::WindowMaximizeButtonHint |
+                             Qt::CustomizeWindowHint);
+        //this->showMinimized();
+    }
 }
 
 OptionWidget::~OptionWidget()
@@ -128,22 +145,26 @@ OptionWidget::~OptionWidget()
     this->stopServer();
 }
 
-void OptionWidget::showMinimized()
-{
-    QWidget::showMinimized();
-//    this->setHidden(true);  // 隐藏
-//    _winflags = this->windowFlags();
-//    this->setWindowFlags(_winflags | Qt::Tool);
-}
+//void OptionWidget::showMinimized()
+//{
+//    QWidget::showMinimized();
+//    //    this->setHidden(true);  // 隐藏
+//    //    _winflags = this->windowFlags();
+//    //    this->setWindowFlags(_winflags | Qt::Tool);
+//    qDebug()<<"showMinimized";
+//}
 
-void OptionWidget::showNormal()
-{
-    QWidget::showNormal();
-    //this->setHidden(false);
-    //this->setWindowFlags(_winflags & ~Qt::Tool);
-    //设置Qt::WindowStaysOnTopHint之后，窗口始终置顶
-    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
-}
+//void OptionWidget::showNormal()
+//{
+//    QWidget::showNormal();
+//    QRect rect = this->geometry();
+//    qDebug()<<rect;
+//    //this->setHidden(false);
+//    //this->setWindowFlags(_winflags & ~Qt::Tool);
+//    //设置Qt::WindowStaysOnTopHint之后，窗口始终置顶
+//    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
+//    qDebug()<<"showNormal";
+//}
 
 void OptionWidget::updateShowData()
 {

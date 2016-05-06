@@ -18,8 +18,8 @@ public:
 
 public slots:
     // 重写最小化和正常显示
-    void showMinimized();
-    void showNormal();
+//    void showMinimized();
+//    void showNormal();
 
 protected:
     // 刷新显示数据

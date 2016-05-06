@@ -7,5 +7,6 @@
         <file>icon/stop.ico</file>
         <file>icon/tray.ico</file>
         <file>icon/restart2.ico</file>
+        <file>icon/folder.ico</file>
     </qresource>
 </RCC>
