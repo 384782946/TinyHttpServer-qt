@@ -19,7 +19,7 @@ TrayMenu::TrayMenu(QObject *parent)
     //显示托盘
     this->show();
     //托盘显示提示信息
-    this->showMessage(QString("Tiny Http Server"),QString("Click to operate"));
+    this->showMessage(tr("Tiny Http Server"),tr("Click to operate"));
 }
 
 void TrayMenu::initMenu()
