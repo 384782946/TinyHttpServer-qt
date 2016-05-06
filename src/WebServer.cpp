@@ -139,5 +139,11 @@ void WebServer::ev_handler(mg_connection *nc, int ev, void *p)
 {
     if(ev == MG_EV_HTTP_REQUEST){   // http 请求
         mg_serve_http(nc,(http_message*)p,opts);
+        // 输出一下IP
+        {
+            uint32_t remote_ip = (*(uint32_t *) &nc->sa.sin.sin_addr);
+            uint8_t* p = (uint8_t*)&remote_ip;
+            printf("IP:%hhu.%hhu.%hhu.%hhu\n",p[0],p[1],p[2],p[3]);
+        }
     }
 }
