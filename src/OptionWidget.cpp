@@ -14,6 +14,10 @@
 #include <QFileDialog>
 #include <QDir>
 
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include <QMimeData>
+
 #include <QDebug>
 
 OptionWidget::OptionWidget(QWidget *parent)
@@ -138,12 +142,17 @@ OptionWidget::OptionWidget(QWidget *parent)
                              Qt::CustomizeWindowHint);
         //this->showMinimized();
     }
+    //支持拖放
+    this->setAcceptDrops(true);
 }
 
 OptionWidget::~OptionWidget()
 {
     this->stopServer();
 }
+
+/*********************************************************************************/
+
 
 //void OptionWidget::showMinimized()
 //{
@@ -175,6 +184,46 @@ void OptionWidget::updateShowData()
     _cbox_dirlist->setChecked(svr->isEnableDirectoryListing());
 }
 
+/*********************************************************************************/
+
+// 拖动对象到窗口部件上，触发dragEnterEvent事件
+void OptionWidget::dragEnterEvent(QDragEnterEvent* event)
+{
+    // MIME类型中text/uri-list用于存储统一资源标识符（URI）
+    // 它们可以是文件名、统一资源定位器（URL，如：HTTP、FTP路径）或者其它全局资源标识符
+    const QMimeData* mime = event->mimeData();
+    // 当只有一个文件的时候，才接受拖放事件
+    if((mime->urls().size() == 1) &&
+       (mime->hasFormat(QString("text/uri-list"))) &&
+        (mime->urls()[0].scheme() == "file")){
+        event->acceptProposedAction();  // 接受这个拖放事件
+    }
+}
+
+// 放下对象，触发dropEvent事件
+void OptionWidget::dropEvent(QDropEvent* event)
+{
+    // 获取这个url
+    QUrl url = event->mimeData()->urls().at(0);
+
+    // 判断是文件夹还是文件
+    #ifdef Q_OS_WIN
+    QFileInfo info(url.path().mid(1)); //需要去掉最前面的 '/'
+    #else
+    QFileInfo info(url.path());
+    #endif
+
+    if(info.isDir()){
+        this->_edit_rootdir->setText(info.filePath());  // 设置路径
+    }
+    else{
+        this->_edit_rootdir->setText(info.dir().path());  // 设置所在目录路径
+    }
+}
+
+
+/*********************************************************************************/
+
 void OptionWidget::startServer()
 {
     WebServer* svr = WebServer::getInstance();
@@ -205,6 +254,8 @@ void OptionWidget::reStartServer()
     _btn_stop->setEnabled(true);
     _btn_restart->setEnabled(true);
 }
+
+/*********************************************************************************/
 
 void OptionWidget::selectRootDir()
 {

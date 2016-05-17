@@ -25,6 +25,10 @@ protected:
     // 刷新显示数据
     void updateShowData();
 
+    // 拖动对象到窗口部件上，触发dragEnterEvent事件
+    void dragEnterEvent(QDragEnterEvent *event);
+    // 放下对象，触发dropEvent事件
+    void dropEvent(QDropEvent *event);
 protected slots:
     // 启动服务
     void startServer();
